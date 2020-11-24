@@ -8,7 +8,7 @@ export const state = () => ({
   page: null,
   authorArticles: [],
   authors: null,
-  enableComments: true,
+  enableComments: false,
   indexInfiniteLoading: {
     enabled: true,
     page: 1

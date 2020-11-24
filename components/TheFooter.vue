@@ -1,12 +1,7 @@
 <template>
   <footer>
-    <div>
-      <span class="fancy link" to="/" @click.prevent="homeScrollTop">
-        <span v-html="meta.name"></span>
-      </span>
-      <div v-if="meta.description" v-html="meta.description"></div>
-      <div>© {{ year }}</div>
-    </div>
+    <div><a href="http://instagram.com/heyblackbox" target="_blank">Instagram</a></div>
+    <div>© {{ year }}</div>
   </footer>
 </template>
 
@@ -31,19 +26,14 @@ export default {
 @import '~/assets/css/vars.scss';
 
 footer {
+  display: flex;
+  justify-content: space-between;
   > div {
     align-items: center;
-    background-color: #fff;
-    color: #757575;
     display: flex;
-    flex-direction: column;
-    height: 200px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.7rem;
-    margin: 0 auto;
-    max-width: $containerWidth;
-    padding: 64px 32px;
-    text-align: center;
+    height: 60px;
+    margin: 0;
+    padding: 32px 24px;
   }
 
   .link {

@@ -35,12 +35,12 @@ export default {
 }
 
 html {
-  background-color: #f5f5f5;
+  background-color: #fff;
   box-sizing: border-box;
   color: $primary;
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Helvetica', sans-serif;
   font-kerning: normal;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 400;
   overflow-y: scroll;
   transition: background-color 0.8s;
@@ -58,7 +58,7 @@ html {
 }
 
 body {
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 1.765em;
 }
 
@@ -67,7 +67,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    padding-top: 80px;
+    padding-top: 60px;
 
     @media (max-width: 700px) {
       padding-top: 60px;
@@ -88,14 +88,14 @@ html.wf-inactive #blog {
 }
 
 main {
-  background-color: #efefef;
+  background-color: #fff;
   margin: 0 auto;
-  max-width: $containerWidth;
-  min-height: calc(100vh - 80px - 200px);
+  // max-width: $containerWidth;
+  min-height: calc(100vh - 60px - 60px);
   width: 100%;
 
   @media (max-width: 700px) {
-    min-height: calc(100vh - 60px - 200px);
+    min-height: calc(100vh - 60px - 600px);
   }
 }
 
@@ -176,7 +176,7 @@ pre {
 }
 
 .lazy {
-  background-color: #555;
+  background-color: #fefefe;
   position: relative;
 
   img {

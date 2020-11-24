@@ -28,14 +28,18 @@ export default {
     ]
   },
 
-  loading: { color: '#fff' },
+  loading: { 
+    color: '#eee',
+    height: '2px',
+    failedColor: '#eee',
+    throttle: '500'
+  },
 
   css: ['normalize.css/normalize.css'],
 
   plugins: [
     { src: '~/plugins/vue-lazyload', ssr: false },
     { src: '~/plugins/vue-scrollto', ssr: false },
-    { src: '~/plugins/disqus' },
     { src: '~/plugins/mixins' }
   ],
 
@@ -62,11 +66,11 @@ export default {
   },
 
   sitemap: {
-    hostname: 'https://nuepress.kmr.io',
-    path: '/sitemap.xml',
+    hostname: 'https://alexanderandreev.me',
+    path: '/wp/sitemap.xml',
     sitemaps: [
       {
-        path: '/sitemap-articles.xml',
+        path: '/wp/sitemap-articles.xml',
         routes: async () => {
           const { data } = await axios.get(process.env.WORDPRESS_API_URL + '/wp/v2/posts', {
             params: { orderby: 'date', per_page: 1000000 }
@@ -78,7 +82,7 @@ export default {
         }
       },
       {
-        path: '/sitemap-pages.xml',
+        path: '/wp/sitemap-pages.xml',
         routes: async () => {
           const { data } = await axios.get(process.env.WORDPRESS_API_URL + '/wp/v2/pages', {
             params: { orderby: 'date', per_page: 1000000 }
@@ -90,7 +94,7 @@ export default {
         }
       },
       {
-        path: '/sitemap-topics.xml',
+        path: '/wp/sitemap-topics.xml',
         routes: async () => {
           const { data } = await axios.get(process.env.WORDPRESS_API_URL + '/wp/v2/categories', {
             params: { per_page: 1000000 }
@@ -102,7 +106,7 @@ export default {
         }
       },
       {
-        path: '/sitemap-users.xml',
+        path: '/wp/sitemap-users.xml',
         routes: async () => {
           const { data } = await axios.get(process.env.WORDPRESS_API_URL + '/wp/v2/users', {
             params: { per_page: 1000000 }

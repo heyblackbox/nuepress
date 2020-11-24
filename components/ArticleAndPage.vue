@@ -1,48 +1,9 @@
 <template>
   <article class="single">
-    <FeaturedImage
-      v-if="getFeaturedImage(data, 'large')"
-      :expanded="expanded"
-      :article="data"
-      :featured-image="getFeaturedImage(data, 'large')"
-    />
-    <transition name="slide-fade">
-      <div
-        class="narrow"
-        :class="{ expanded: expanded, 'no-featured-image': !getFeaturedImage(data, 'large') }"
-      >
-        <button
-          class="expand-featured-image"
-          title="Show full image"
-          @click.prevent="expanded = !expanded"
-          :class="{ expanded: expanded }"
-          v-if="getFeaturedImage(data, 'large')"
-        >
-          <svg
-            fill="#000000"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" />
-            <path d="M0 0h24v24H0z" fill="none" />
-          </svg>
-        </button>
-        <div class="meta">
+      <div class="narrow">
           <h1 class="title" v-html="data.title.rendered"></h1>
-          <div class="details">
-            <span>{{ longTimestamp(data.date) }}</span>
-            <span class="separator">|</span>
-            <nuxt-link class="author fancy" :to="`/authors/${data._embedded.author[0].slug}`">
-              <span>{{ data._embedded.author[0].name }}</span>
-            </nuxt-link>
-          </div>
-        </div>
         <div class="content" v-html="data.content.rendered"></div>
-        <Comments :article="data" v-if="$store.state.enableComments && type === 'article'" />
       </div>
-    </transition>
     <div v-if="colorAccentStyles" v-html="colorAccentStyles"></div>
   </article>
 </template>
@@ -50,23 +11,21 @@
 <script>
 import * as Vibrant from 'node-vibrant';
 
-import FeaturedImage from '~/components/FeaturedImage.vue';
-import Comments from '~/components/Comments';
-
 export default {
   props: {
     data: Object,
     type: String
   },
 
+  head: {
+    title: "Alexander Andreev"
+  },
+
   mixins: {
-    getFeaturedImage: Function,
     longTimestamp: Function
   },
 
   components: {
-    FeaturedImage,
-    Comments
   },
 
   data() {
@@ -132,10 +91,6 @@ export default {
 
   mounted() {
     this.initGallery();
-
-    if (this.getFeaturedImage(this.data, 'thumbnail')) {
-      this.getColorAccentStyles(this.data).then(styles => (this.colorAccentStyles = styles));
-    }
   }
 };
 </script>
@@ -144,7 +99,7 @@ export default {
 @import '~/assets/css/vars.scss';
 
 article {
-  background-color: #efefef;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -156,15 +111,14 @@ article {
 
   &.page-enter .narrow,
   .page-leave-to .narrow {
-    transform: translateY(16px);
+    transform: translateY(8px);
   }
 
   .narrow {
-    background-color: #efefef;
     margin: 0 auto;
-    max-width: 842px;
-    min-height: calc(100vh - 80px - 96px - 200px);
-    padding: 0 96px 96px 96px;
+    max-width: $containerWidth;
+    min-height: calc(100vh - 60px - 60px);
+    padding: 32px 64px 64px 64px;
     position: relative;
     transition: min-height 1s, transform 1s;
     transform: translateY(0);
@@ -185,69 +139,14 @@ article {
       padding: 0 16px 16px 16px;
     }
 
-    .expand-featured-image {
-      background-color: transparent;
-      border: 0;
-      cursor: pointer;
-      outline: 0;
-      position: absolute;
-      right: 32px;
-      top: 32px;
-      transition: 1s;
-      z-index: 1;
-
-      @media (max-width: 900px) {
-        display: none;
-      }
-
-      &:hover {
-        svg {
-          opacity: 1;
-        }
-      }
-
-      &.expanded {
-        transform: rotate(180deg);
-      }
-
-      svg {
-        fill: $primary;
-        height: 24px;
-        opacity: 0.7;
-        transition: 0.1s;
-        width: 24px;
-      }
-    }
-
-    &.no-featured-image {
-      margin: 0 auto;
-    }
   }
 
-  .meta {
-    .title {
-      font-size: 40px;
-      line-height: 1;
-      margin-bottom: 16px;
-      margin-top: 0;
-      padding-top: 64px;
-
-      @media (max-width: 700px) {
-        padding-top: 48px;
-      }
-
-      @media (max-width: 500px) {
-        padding-top: 32px;
-      }
-    }
-
-    .details {
-      font-size: 0.8rem;
-
-      .separator {
-        padding: 0 0.5rem;
-      }
-    }
+  .title {
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: 16px;
+    margin-top: 0;
+    padding-top: 48px;
   }
 }
 </style>
@@ -300,17 +199,31 @@ article {
 
 .single {
   .content {
-    border-top: 1px dotted lighten($primary, 20%);
-    padding-top: 32px;
     margin-top: 32px;
+
+    p {
+      max-width: 720px;
+    }
+
+    .wp-block-image {
+      margin:0;
+    }
 
     .alignnone,
     .size-full,
+    .size-large,
     .wp-caption {
       background-color: #fff;
-      padding: 16px;
+      padding: 4px 0px;
       display: block;
       margin-bottom: 32px;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+
+      margin-block-start: 0em;
+      margin-block-end: 0em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
 
       img {
         display: block;
@@ -320,6 +233,8 @@ article {
 
       &.alignnone {
         max-width: 100%;
+        float: left;
+        
       }
 
       &.aligncenter {
@@ -356,7 +271,7 @@ article {
     }
 
     a {
-      color: $accent;
+      color: $primary;
       position: relative;
 
       &:hover {
@@ -391,9 +306,16 @@ article {
       max-width: 100%;
     }
 
+    figure {
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+    }
+
     > *:first-child {
       margin-top: 0;
     }
+
+
   }
 }
 </style>

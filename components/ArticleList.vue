@@ -1,44 +1,18 @@
 <template>
   <div class="article-list">
     <article v-for="article in articles" :key="article.id">
-      <div class="date">
-        <span v-html="shortTimestamp(article.date)"></span>
-        &nbsp;–&nbsp;
-        <span class="topics">
-          <span class="topic" v-for="topic in article._embedded['wp:term'][0]">
-            <nuxt-link
-              class="fancy"
-              :to="`/topics/${topic.slug}`"
-              :key="topic.id"
-              v-html="topic.name"
-            ></nuxt-link>
-          </span>
-        </span>
-      </div>
       <nuxt-link :to="`/${article.slug}`" class="row">
-        <div class="col no-flex-shrink">
-          <div class="lazy thumbnail" v-if="article._embedded['wp:featuredmedia']">
-            <img
-              :alt="article._embedded['wp:featuredmedia'][0].alt_text"
-              v-lazy="
-                article._embedded['wp:featuredmedia'][0].media_details.sizes.thumbnail.source_url
-              "
-            />
-            <Spinner1 class="spinner" />
-          </div>
           <div class="lazy medium" v-if="article._embedded['wp:featuredmedia']">
             <img
               :alt="article._embedded['wp:featuredmedia'][0].alt_text"
               v-lazy="
-                article._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url
+                article._embedded['wp:featuredmedia'][0].media_details.sizes.large.source_url
               "
             />
-            <Spinner1 class="spinner" />
+
           </div>
-        </div>
-        <div class="col">
-          <h2 v-html="article.title.rendered"></h2>
-          <div class="excerpt" v-html="article.excerpt.rendered"></div>
+        <div class="caption">
+          <p v-html="article.title.rendered"></p>
         </div>
       </nuxt-link>
     </article>
@@ -65,27 +39,38 @@ export default {
 @import '~/assets/css/vars.scss';
 
 .article-list {
-  article + article {
-    border-top: 1px dotted lighten($primary, 20%);
-    margin-top: 32px;
-    padding-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+
+  article {
+    width: 50%;
+    max-height: 60%;
+    padding: 2% 5%;
+    text-align: center;
+
+    &:hover {
+
+    }
+
+    @media (max-width: 900px) {
+      width: 100%;
+      padding: 10%;
+    }
   }
 
   .row {
     display: flex;
+    height: 100%;
+    flex-direction:column;
+    justify-content:center;
+    text-align:center;
+    margin: auto;
 
-    @media (max-width: 700px) {
-      flex-direction: column;
-    }
-
-    & + .row {
-      margin-top: 16px;
-    }
+    color: #606060;
 
     .col {
-      display: flex;
-      flex-direction: column;
-
       @media (max-width: 700px) {
         & + .col {
           margin-top: 16px;
@@ -94,79 +79,40 @@ export default {
     }
   }
 
-  .no-flex-shrink {
-    flex-shrink: 0;
+  .caption {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 0.5rem;
   }
 
-  .date {
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 400;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-
-    .topic:not(:last-child) {
-      margin-right: 4px;
-
-      &::after {
-        content: ', ';
-        color: $primary;
-      }
-    }
-
-    a:hover {
-      color: $accent;
-    }
-  }
-
-  h2 {
-    color: #111;
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    margin-top: -6px;
-  }
-
-  .excerpt {
-    @media (max-width: 500px) {
-      // display: none;
-    }
-  }
 
   .lazy {
-    margin: 0 22px 0 0;
-
-    &.thumbnail {
-      display: block;
-    }
+      margin: 0 0 0 0;
+      align-self: center;
+      background: none;
+      min-height: 200px;
 
     &.medium {
-      display: none;
+      display: block;
     }
 
     @media (max-width: 700px) {
       margin: 0;
+      min-height: 0;
 
-      &.thumbnail {
-        display: none;
-      }
-
-      &.medium {
-        display: block;
-      }
     }
 
     img {
-      display: block;
-      height: 144px;
-      width: 144px;
+      object-fit: contain;
+      max-height: 600px;
+      background-color: none;
 
-      @media (max-width: 1200px) {
-        height: 96px;
-        width: 96px;
+      &:hover {
+        transition: all 1s cubic-bezier(0.11, 0.89, 0.31, 0.99);
+        opacity: 0.92;
       }
 
       @media (max-width: 700px) {
-        height: 200px;
         object-fit: cover;
         width: 100%;
       }
@@ -185,8 +131,7 @@ export default {
     text-decoration: none;
 
     &:hover {
-      color: #000;
-      transform: translateX(4px);
+
     }
   }
 

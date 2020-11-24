@@ -1,9 +1,9 @@
 {
-  "name": "NuePress",
+  "name": "AlexanderAndreev",
   "version": "1.0.0",
   "license": "MIT",
-  "author": "Kevin Restaino",
-  "description": "Nuxt.js + WordPress REST API",
+  "author": "Alexander Andreev",
+  "description": "Images by Alexander Andreev",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",

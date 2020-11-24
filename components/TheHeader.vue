@@ -5,22 +5,17 @@
         <h1 v-html="meta.name"></h1>
       </span>
       <nav>
-        <nuxt-link to="/" exact>Latest Articles</nuxt-link>
-        <nuxt-link to="/topics">Topics</nuxt-link>
-        <nuxt-link to="/authors">Authors</nuxt-link>
-        <nuxt-link to="/pages/sample-page">Sample Page</nuxt-link>
+        <nuxt-link to="/" exact>Works</nuxt-link>
+        <nuxt-link to="/pages/info">Info</nuxt-link>
       </nav>
-      <TheHeaderSearch />
     </div>
   </header>
 </template>
 
 <script>
-import TheHeaderSearch from '~/components/TheHeaderSearch';
 
 export default {
   components: {
-    TheHeaderSearch
   },
 
   computed: {
@@ -48,13 +43,12 @@ header {
 
   > div {
     align-items: center;
-    border-bottom: 1px solid #d8d8d8;
-    background-color: #fff;
     display: flex;
-    height: 80px;
+    justify-content: space-between;
+    height: 60px;
     margin: 0 auto;
-    max-width: $containerWidth;
-    padding: 0 32px;
+    // max-width: $containerWidth;
+    padding: 0 24px;
     transition: padding-top 0.5s, padding-bottom 0.5s;
 
     @media (max-width: 700px) {
@@ -71,41 +65,39 @@ header {
     }
 
     h1 {
-      color: #666;
+      color: $primary;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 400;
     }
   }
 
   nav {
     flex-shrink: 0;
-
     @media (max-width: 500px) {
-      display: none;
+
     }
   }
 
   a {
+    color: $primary;
     border-color: lighten($primary, 40%);
-    color: #757575;
-    font-size: 0.9rem;
-    font-weight: 300;
+    font-size: 1rem;
+    font-weight: 400;
     text-decoration: none;
     transition: color 0.1s, border-color 0.1s;
 
     &:hover {
-      color: #555;
-      border-color: #555;
+
     }
 
     &.nuxt-link-active {
-      padding-bottom: 4px;
-      border-bottom: 2px solid;
+      padding-bottom: 3px;
+      border-bottom: 1px solid;
     }
 
     & + a {
-      margin-left: 32px;
+      margin-left: 24px;
 
       @media (max-width: 700px) {
         margin-left: 16px;
